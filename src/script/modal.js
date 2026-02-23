@@ -1,6 +1,7 @@
 import { counter } from '@script/counter.js';
 import { IngridientCard } from '@script/ingridientCard.js';
 import { settings, pubSub } from '@constant';
+import { renderBuilderReady } from '@script/renderBuilderReady.js';
 export class SandwichBuilder {
   constructor(data) {
     this.settings = settings;
@@ -113,7 +114,7 @@ export class SandwichBuilder {
         card.renderModalCard();
       }
     } else {
-      this.renderBuilderReady();
+      renderBuilderReady(this.settings, this.cardData);
     }
   }
 
@@ -123,87 +124,6 @@ export class SandwichBuilder {
       element.style.backgroundColor = 'white';
     }
     document.getElementById(this.currentKey).style.backgroundColor = '#FFC000';
-  }
-
-  renderBuilderReady() {
-    document.getElementById('modal-menu-wrapper').innerHTML = '';
-    const header = document.getElementById('header-text');
-    header.textContent = this.settings.finish.title;
-
-    const modalReady = document.createElement('div');
-    modalReady.id = 'modal-ready';
-    const imageWrapper = document.createElement('div');
-    imageWrapper.className = 'modal-card-img modal-ready';
-    const img = document.createElement('img');
-    img.src = this.cardData.image;
-    const modalProductContent = document.createElement('div');
-    modalProductContent.id = 'modal-ready-information';
-    const title = document.createElement('span');
-    title.textContent = 'Ваш сендвич готов!';
-    const listIngridients = document.createElement('ul');
-    listIngridients.id = 'modal-ready-information-ingridients';
-    for (let ingridient in this.cardData.components) {
-      const ingridientElement = document.createElement('li');
-      if (typeof this.cardData.components[ingridient][1] === 'string') {
-        ingridientElement.textContent = `${this.settings[ingridient].name}: ${this.cardData.components[ingridient][1]}`;
-      } else {
-        let list = [];
-        for (let component of this.cardData.components[ingridient]) {
-          list.push(component[1]);
-        }
-        if (list.length === 0) list = 'Нет';
-        ingridientElement.textContent = `${this.settings[ingridient].name}: ${list}`;
-      }
-
-      listIngridients.appendChild(ingridientElement);
-    }
-    const name = document.createElement('span');
-    name.id = 'modal-ready-name';
-    name.textContent = this.cardData.name;
-
-    const footer = document.getElementById('modal-footer');
-    footer.innerHTML = '';
-    const counterDescription = document.createElement('span');
-    counterDescription.id = 'modal-counter-description';
-    counterDescription.textContent = 'КОЛИЧЕСТВО';
-    const counterElem = counter();
-
-    const priceWrapper = document.createElement('div');
-    priceWrapper.textContent = 'Итого: ' + this.cardData.price + ' руб.';
-    const toBasket = document.createElement('button');
-    toBasket.id = 'modal-add-to-basket';
-    toBasket.className = 'product-add-to-basket';
-    toBasket.textContent = 'В КОРЗИНУ';
-
-    this.renderIngridientSwicher();
-
-    toBasket.addEventListener('click', () => {
-      const input = counterElem.querySelector('.product-counter-input');
-      pubSub.publish('addToBasket', {
-        message: 'Пользователь добавил товар в корзину',
-        name: this.cardData.name,
-        value: input.value,
-        price: this.cardData.price
-      });
-
-      this.closeBuilder();
-    });
-
-    imageWrapper.appendChild(img);
-    modalReady.appendChild(imageWrapper);
-
-    modalProductContent.appendChild(title);
-    modalProductContent.appendChild(listIngridients);
-    modalProductContent.appendChild(name);
-    modalReady.appendChild(modalProductContent);
-
-    footer.appendChild(counterDescription);
-    footer.appendChild(counterElem);
-
-    priceWrapper.appendChild(toBasket);
-    footer.appendChild(priceWrapper);
-
-    document.getElementById('modal-menu-wrapper').appendChild(modalReady);
   }
 
   getNextKey() {

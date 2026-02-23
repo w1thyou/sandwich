@@ -9,14 +9,6 @@ export const table = document.getElementById('menu-swicher');
 //pubSub.js
 export const pubSub = new PubSub();
 
-//counter.js
-export const counterWrapper = document.createElement('div');
-export const buttonMinus = document.createElement('button');
-export const buttonMinusContent = document.createElement('span');
-export const input = document.createElement('input');
-export const buttonPlus = document.createElement('button');
-export const buttonPlusContent = document.createElement('span');
-
 //modal.js
 export const settings = {
   size: {
