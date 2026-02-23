@@ -1,5 +1,4 @@
 import { pubSub, table } from '@constant';
-import { menuSwicherCallback } from '@callback';
 //Создание эвентов для таблицы выбора категорий
 
 table.firstElementChild.onclick = function (event) {

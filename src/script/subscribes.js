@@ -1,4 +1,3 @@
-import { addProduct } from '@script/basket.js';
 import { pubSub } from '@constant';
 import { menuSwicherCallback, addTobasketCallback } from '@callback';
 

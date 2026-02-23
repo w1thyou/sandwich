@@ -38,8 +38,6 @@ export class Menu {
       let cardElement = new Card(product);
       this.data.push(cardElement);
     }
-
-    // console.log(data);
     return data;
   }
 

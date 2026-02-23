@@ -1,4 +1,3 @@
-import { counter } from '@script/counter.js';
 import { IngridientCard } from '@script/ingridientCard.js';
 import { settings, pubSub } from '@constant';
 import { renderBuilderReady } from '@script/renderBuilderReady.js';
@@ -62,8 +61,6 @@ export class SandwichBuilder {
         this.cardCollections[this.currentKey].push(cardElement);
       }
     }
-
-    // console.log(data);
     return data;
   }
   async initialize() {
@@ -100,9 +97,7 @@ export class SandwichBuilder {
       document.getElementById('modal-menu-wrapper').appendChild(menu);
 
       await this.initialize();
-      // console.log(type);
-      // console.log(data);
-      // console.log(data.price);
+
       const header = document.getElementById('header-text');
       header.textContent = this.settings[this.currentKey].title;
       const footer = document.getElementById('modal-footer');

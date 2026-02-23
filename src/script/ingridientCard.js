@@ -32,7 +32,6 @@ export class IngridientCard {
     if (this.data.choosed) {
       card.style.backgroundColor = '#FDD55C';
       card.style.boxShadow = '0px 0px 5px rgba(0, 0, 0, 0.5)';
-      // console.log(this.data);
     }
     if (!this.data.choosed) {
       card.addEventListener('click', () => {
