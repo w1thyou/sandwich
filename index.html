@@ -9,37 +9,13 @@
     <title>Burgers</title>
   </head>
   <body>
-    <script src="src/script/pubSub.js" type="module"></script>
-    <script src="src/script/subscribes.js" type="module"></script>
     <header>
       <span id="heading"> СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА </span>
     </header>
     <div id="main-sheet">
       <div id="active-panel">
         <table id="menu-swicher">
-          <tr>
-            <td class="menu-button" id="menu-swicher-pizza-button">Пицца</td>
-          </tr>
-          <tr>
-            <td class="menu-button" id="menu-swicher-shaurma-button">Шаурма</td>
-          </tr>
-          <tr>
-            <td class="menu-button" id="menu-swicher-sandwiches-button">Сендвичи</td>
-          </tr>
-          <tr>
-            <td class="menu-button" id="menu-swicher-burgers-button">Бургеры</td>
-          </tr>
-          <tr>
-            <td class="menu-button" id="menu-swicher-chicken-button">Курица & Картофель</td>
-          </tr>
-          <tr>
-            <td class="menu-button" id="menu-swicher-salads-button">Тортилья & Салаты</td>
-          </tr>
-          <tr>
-            <td class="menu-button" id="menu-swicher-drinks-button">Напитки & Десерты</td>
-          </tr>
         </table>
-        <script src="src/script/menuSwicher.js" type="module"></script>
         <div id="basket">
           <div id="basket-description">
             <div id="basket-image">
@@ -72,33 +48,7 @@
       </div>
       <div id="menu-wrapper">
         <div id="menu">
-          <div class="position-card">
-            <img class="logo" src="i/markets/subway_logo.png" alt="subway" />
-            <div class="product-image-wrapper">
-              <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="" />
-            </div>
-
-            <span class="product-name">Овощной</span>
-            <div class="product-ingridients">
-              <a href="">Соус и овощи на выбор</a>
-            </div>
-            <span class="product-price">Цена: 110 руб.</span>
-            <span class="counter-description">КОЛИЧЕСТВО</span>
-
-            <div class="product-counter">
-              <button class="counter-buttons"><span class="counter-buttons-text">-</span></button>
-              <input
-                name="counter"
-                class="product-counter-input"
-                type="number"
-                inputmode="numeric"
-                value="1"
-              />
-              <button class="plus-button counter-buttons"><span class="counter-buttons-text">+</span></button>
-            </div>
-
-            <button class="product-add-to-basket">В КОРЗИНУ</button>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -164,5 +114,6 @@
         <button class="product-add-to-basket">В КОРЗИНУ</button>
       </div>
     </template>
+    <script src="src/script/main.js" type="module"></script>
   </body>
 </html>

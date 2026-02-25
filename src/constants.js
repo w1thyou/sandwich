@@ -1,15 +1,7 @@
 import { PubSub } from '@script/pubSub.js';
 
-//basket.js
-export const basket = document.getElementById('basket-content');
-export const basketPrice = document.getElementById('order-status');
+export const yellow = '#FFC000';
 
-//menuSwicher.js
-export const table = document.getElementById('menu-swicher');
-//pubSub.js
-export const pubSub = new PubSub();
-
-//modal.js
 export const settings = {
   size: {
     name: 'Размер',

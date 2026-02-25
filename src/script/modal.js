@@ -1,5 +1,5 @@
 import { IngridientCard } from '@script/ingridientCard.js';
-import { settings, pubSub } from '@constant';
+import { settings, yellow } from '@constant';
 import { renderBuilderReady } from '@script/renderBuilderReady.js';
 export class SandwichBuilder {
   constructor(data) {
@@ -118,7 +118,7 @@ export class SandwichBuilder {
     for (let element of row) {
       element.style.backgroundColor = 'white';
     }
-    document.getElementById(this.currentKey).style.backgroundColor = '#FFC000';
+    document.getElementById(this.currentKey).style.backgroundColor = yellow;
   }
 
   getNextKey() {

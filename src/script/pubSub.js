@@ -22,8 +22,5 @@ export class PubSub {
       callbacks.forEach((cb) => cb(data));
     }
   }
-
-  close() {
-    this.channel.close();
-  }
 }
+export const pubSub = new PubSub();

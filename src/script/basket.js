@@ -1,6 +1,8 @@
-import { basket, basketPrice } from '@constant';
+import { yellow } from '@constant';
 
 export function addProduct(name, value, price) {
+  const basket = document.getElementById('basket-content');
+  const basketPrice = document.getElementById('order-status');
   //Создние строки с продкутом, добавляемым в корзину
   const template = document.getElementById('basket-content-template');
   const newContent = template.content.cloneNode(true);
@@ -17,5 +19,5 @@ export function addProduct(name, value, price) {
   basketPrice.textContent = `Итого: ${currentPrice} руб.`;
 
   const orderButton = document.getElementById('place-an-order');
-  orderButton.style.backgroundColor = '#FFC000';
+  orderButton.style.backgroundColor = yellow;
 }
