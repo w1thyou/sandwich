@@ -23,7 +23,7 @@
   display: flex;
   width: 100%;
   height: fit-content;
-  background-color: #ffc000;
+  background-color: var(--color-brand);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
@@ -167,7 +167,7 @@
   background-size: 100%;
   margin-top: 10px;
   margin: auto;
-  border: #ffc000 solid 10px;
+  border: var(--color-brand) solid 10px;
   border-radius: 50%;
   overflow: hidden;
 }

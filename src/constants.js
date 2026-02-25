@@ -45,3 +45,11 @@ export const switcherTable = {
   salads: { content: 'Тортилья & Салаты', id: 'menu-switcher-salads-button' },
   drinks: { content: 'Напитки & Десерты', id: 'menu-switcher-drinks-button' }
 };
+export const ingredientSwitcher = {
+  size: { content: 'Размер', id: 'size' },
+  bread: { content: 'Хлеб', id: 'bread' },
+  vegetable: { content: 'Овощи', id: 'vegetable' },
+  sauce: { content: 'Соусы', id: 'sauce' },
+  filling: { content: 'Начинка', id: 'filling' },
+  finish: { content: 'Готово!', id: 'finish' }
+};

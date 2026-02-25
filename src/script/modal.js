@@ -1,6 +1,7 @@
 import { IngredientCard } from '@script/ingredientCard.js';
 import { settings, yellow } from '@constant';
 import { renderBuilderReady } from '@script/renderBuilderReady.js';
+import { loadJson } from '@api';
 export class SandwichBuilder {
   constructor(data) {
     this.settings = settings;
@@ -21,14 +22,7 @@ export class SandwichBuilder {
   }
 
   async loadData() {
-    this.cardCollections = {};
-    let jsonData;
-    try {
-      const response = await fetch('data.json');
-      jsonData = await response.json();
-    } catch (error) {
-      console.error(`Не удается прочитать data.json\n\n${error}`);
-    }
+    let jsonData = await loadJson();
 
     let data = [];
     const clonedData = JSON.parse(JSON.stringify(jsonData[settings[this.currentKey].object]));

@@ -1,4 +1,5 @@
 import { Card } from '@script/card.js';
+import { loadJson } from '@api';
 
 //Меню продуктов
 export class Menu {
@@ -13,14 +14,7 @@ export class Menu {
   }
   //функция загрузки данных
   async loadData() {
-    let jsonData;
-    try {
-      const response = await fetch('/data.json');
-      jsonData = await response.json();
-    } catch (error) {
-      console.error(`Не удается прочитать data.json\n\n${error}`);
-    }
-
+    let jsonData = await loadJson();
     let data = [];
 
     //Отбор продуктов из нужной категории

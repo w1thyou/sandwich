@@ -61,14 +61,7 @@
         </div>
         <div id="modal-content">
           <table id="ingredients-switcher">
-            <tr>
-              <td class="ingredients" id="size">Размер</td>
-              <td class="ingredients" id="bread">Хлеб</td>
-              <td class="ingredients" id="vegetable">Овощи</td>
-              <td class="ingredients" id="sauce">Соусы</td>
-              <td class="ingredients" id="filling">Начинка</td>
-              <td class="ingredients" id="finish">Готово!</td>
-            </tr>
+
           </table>
           <div id="modal-buttons">
             <button class="modal-switcher" id="previous-modal">
@@ -82,38 +75,14 @@
           </div>
           <div id="modal-menu-wrapper">
             <div id="modal-menu">
-              <div class="modal-card">
-                <div class="modal-card-img"><img src="i/sizes/1x.jpg" alt="" /></div>
-                <span class="modal-card-description">15 См</span>
-                <span class="modal-card-price">Цена: 110 руб.</span>
-              </div>
+      
             </div>
           </div>
-          <div class="modal-footer" id="modal-footer">Итого:110 руб.</div>
+          <div class="modal-footer" id="modal-footer"></div>
         </div>
       </div>
     </div>
 
-    <template id="card-template">
-      <div class="position-card">
-        <img class="logo" src="i/markets/subway_logo.png" alt="subway" />
-        <img class="product-image" src="i/sandwiches/ovoshnoy.png" alt="" />
-        <span class="product-name">Овощной</span>
-        <div class="product-ingredients">
-          <a href="">Соус и овощи на выбор</a>
-        </div>
-        <span class="product-price">Цена: 110 руб.</span>
-        <span class="counter-description">КОЛИЧЕСТВО</span>
-
-        <div class="product-counter">
-          <button class="counter-buttons"><span class="counter-buttons-text">-</span></button>
-          <input name="counter" class="product-counter-input" type="number" inputmode="numeric" value="1" />
-          <button class="counter-buttons"><span class="counter-buttons-text">+</span></button>
-        </div>
-
-        <button class="product-add-to-basket">В КОРЗИНУ</button>
-      </div>
-    </template>
     <script src="src/script/main.js" type="module"></script>
   </body>
 </html>
