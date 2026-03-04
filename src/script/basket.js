@@ -1,4 +1,4 @@
-import { yellow } from '@constant';
+import { secondaryColour } from '@constant';
 
 export function addProduct(name, value, price) {
   const basket = document.getElementById('basket-content');
@@ -20,5 +20,5 @@ export function addProduct(name, value, price) {
   basketPrice.textContent = `Итого: ${currentPrice} руб.`;
 
   const orderButton = document.getElementById('place-an-order');
-  orderButton.style.backgroundColor = yellow;
+  orderButton.style.backgroundColor = secondaryColour;
 }

@@ -1,4 +1,4 @@
-import { switcherTable, yellow } from '@constant';
+import { switcherTable, secondaryColour } from '@constant';
 import { pubSub } from '@script/pubSub.js';
 
 export function renderSwitcherTable() {
@@ -18,7 +18,7 @@ export function renderSwitcherTable() {
     for (let tr of table.children) {
       tr.style.backgroundColor = 'white';
     }
-    event.target.parentElement.style.backgroundColor = yellow;
+    event.target.parentElement.style.backgroundColor = secondaryColour;
 
     let category = event.target.id.split('-')[2].split('&');
     pubSub.publish('menuType', { message: 'Пользователь нажал на один из элементов меню', category });

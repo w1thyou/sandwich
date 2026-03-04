@@ -1,6 +1,6 @@
 import { counter } from '@script/counter.js';
 import { pubSub } from '@script/pubSub.js';
-import { yellow } from '@constant';
+import { secondaryColour } from '@constant';
 
 export function renderBuilderReady(settings, cardData) {
   document.getElementById('modal-menu-wrapper').innerHTML = '';
@@ -56,7 +56,7 @@ export function renderBuilderReady(settings, cardData) {
   for (let element of row) {
     element.style.backgroundColor = 'white';
   }
-  document.getElementById('finish').style.backgroundColor = yellow;
+  document.getElementById('finish').style.backgroundColor = secondaryColour;
 
   toBasket.addEventListener('click', () => {
     const input = counterElem.querySelector('.product-counter-input');

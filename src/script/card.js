@@ -1,4 +1,4 @@
-import { yellow } from '@constant';
+import { secondaryColour } from '@constant';
 import { pubSub } from '@script/pubSub.js';
 import { counter } from '@script/counter.js';
 import { SandwichBuilder } from '@script/modal.js';
@@ -110,7 +110,7 @@ export class Card {
       });
 
       const basketButton = document.getElementById('place-an-order');
-      basketButton.style.backgroundColor = yellow;
+      basketButton.style.backgroundColor = secondaryColour;
       basketButton.style.cursor = 'pointer';
     });
     return card;

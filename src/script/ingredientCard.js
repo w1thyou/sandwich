@@ -1,3 +1,5 @@
+import { selectedCardBg, unselectedCardBg, cardShadow } from '@constant';
+
 export class IngredientCard {
   constructor(data, multiple, builder) {
     this.builder = builder;
@@ -30,20 +32,20 @@ export class IngredientCard {
     const modalMenu = document.getElementById('modal-menu');
     modalMenu.appendChild(card);
     if (this.data.choosed) {
-      card.style.backgroundColor = '#FDD55C';
-      card.style.boxShadow = '0px 0px 5px rgba(0, 0, 0, 0.5)';
+      card.style.backgroundColor = selectedCardBg;
+      card.style.boxShadow = cardShadow;
     }
     if (!this.data.choosed) {
       card.addEventListener('click', () => {
         if (this.multiple === false || !this.multiple) {
           this.builder.cardData.price -= this.builder.cardData.components[this.builder.currentKey][2];
           for (let cardElement of modalMenu.children) {
-            cardElement.style.backgroundColor = '#EBEAE8';
+            cardElement.style.backgroundColor = unselectedCardBg;
             cardElement.style.boxShadow = 'none';
           }
         }
-        card.style.backgroundColor = '#FDD55C';
-        card.style.boxShadow = '0px 0px 5px rgba(0, 0, 0, 0.5)';
+        card.style.backgroundColor = selectedCardBg;
+        card.style.boxShadow = cardShadow;
 
         if (typeof this.builder.cardData.components[this.builder.currentKey][0] === 'string') {
           this.builder.cardData.components[this.builder.currentKey] = [this.data.id, this.data.name];
@@ -56,7 +58,7 @@ export class IngredientCard {
     } else {
       card.addEventListener('click', () => {
         if (this.builder.currentKey === 'size' || this.builder.currentKey === 'bread') return;
-        card.style.backgroundColor = '#EBEAE8';
+        card.style.backgroundColor = unselectedCardBg;
         card.style.boxShadow = 'none';
         this.builder.cardData.price -= this.data.price;
         this.data.choosed = false;

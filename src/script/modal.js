@@ -1,5 +1,5 @@
 import { IngredientCard } from '@script/ingredientCard.js';
-import { settings, yellow } from '@constant';
+import { settings, secondaryColour } from '@constant';
 import { renderBuilderReady } from '@script/renderBuilderReady.js';
 import { loadJson } from '@api';
 export class SandwichBuilder {
@@ -118,7 +118,7 @@ export class SandwichBuilder {
     for (let element of row) {
       element.style.backgroundColor = 'white';
     }
-    document.getElementById(this.currentKey).style.backgroundColor = yellow;
+    document.getElementById(this.currentKey).style.backgroundColor = secondaryColour;
   }
 
   getNextKey() {
