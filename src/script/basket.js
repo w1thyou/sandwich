@@ -1,5 +1,3 @@
-import { accentColour } from '@constant';
-
 export function addProduct(name, value, price) {
   const basket = document.getElementById('basket-content');
   const basketPrice = document.getElementById('order-status');

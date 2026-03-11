@@ -1,10 +1,4 @@
 export function counter() {
-  /*
-  Константы здесь, а не в constants.js потому что иначе ломается логика,
-  все элементы создаются один раз а затем каждый раз вызывается эта функция,
-  из-за чего возникает наложение обработчиков(Я могу добавить функцию создания кнопок, 
-  но тогда код будет немного запутанней)
-  */
   const counterWrapper = document.createElement('div');
   const buttonMinusContent = document.createElement('span');
   const input = document.createElement('input');

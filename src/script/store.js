@@ -67,7 +67,11 @@ export class Store {
     const multiple = settings[category]?.multiple;
 
     if (!multiple) {
-      this.state.sandwichConfig.components[category] = [ingredient.id, ingredient.name, ingredient.price || 0];
+      this.state.sandwichConfig.components[category] = [
+        ingredient.id,
+        ingredient.name,
+        ingredient.price || 0
+      ];
     } else {
       const current = this.state.sandwichConfig.components[category];
       const exists = current.find((item) => item[0] === ingredient.id);
