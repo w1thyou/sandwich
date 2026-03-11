@@ -80,6 +80,7 @@ export function renderBuilderReady(settings, cardData) {
 
     const modal = document.getElementById('modal');
     modal.classList.remove('modal-visible');
+    document.body.classList.remove('no-scroll');
   });
 
   imageWrapper.appendChild(img);
