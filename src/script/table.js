@@ -1,4 +1,4 @@
-import { switcherTable, secondaryColour } from '@constant';
+import { switcherTable, accentColour } from '@constant';
 import { pubSub } from '@script/pubSub.js';
 
 export function renderSwitcherTable() {

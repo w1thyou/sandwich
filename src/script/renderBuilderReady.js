@@ -1,6 +1,6 @@
 import { counter } from '@script/counter.js';
 import { pubSub } from '@script/pubSub.js';
-import { secondaryColour } from '@constant';
+import { accentColour } from '@constant';
 
 export function renderBuilderReady(settings, cardData) {
   document.getElementById('modal-menu-wrapper').innerHTML = '';

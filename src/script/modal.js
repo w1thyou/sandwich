@@ -1,93 +1,33 @@
 import { IngredientCard } from '@script/ingredientCard.js';
-import { settings, secondaryColour } from '@constant';
+import { settings } from '@constant';
 import { renderBuilderReady } from '@script/renderBuilderReady.js';
-import { loadJson } from '@api';
+import { store } from '@script/store.js';
+
 export class SandwichBuilder {
-  constructor(data) {
+  constructor() {
     this.settings = settings;
-    this.cardData = JSON.parse(JSON.stringify(data));
-    for (let component in this.cardData.components) {
-      if (typeof this.cardData.components[component] === 'string') {
-        this.cardData.components[component] = [this.cardData.components[component], '', 0];
-      } else {
-        this.cardData.components[component] = this.cardData.components[component].map((item) => [
-          item,
-          '',
-          0
-        ]);
-      }
-    }
     this.cardCollections = {};
-    this.currentKey = 'size';
-    this.ingridients = {};
   }
-  async loadData() {
-    if (!(this.currentKey in this.ingridients)) {
-      let jsonData = await loadJson();
-      for (const key in settings) {
-        if (key == 'finish') return;
-        const clonedData = JSON.parse(JSON.stringify(jsonData[settings[key].object]));
-        const data = [];
-        data.push(clonedData);
 
-        this.ingridients[key] = data;
-      }
-    }
-
-    for (let comp in this.ingridients[this.currentKey][0]) {
-      this.ingridients[this.currentKey][0][comp].id = comp;
-      this.ingridients[this.currentKey][0][comp].choosed = false;
-    }
-
-    if (typeof this.cardData['components'][this.currentKey][0] === 'string') {
-      const compId = this.cardData.components[this.currentKey][0];
-      if (this.ingridients[this.currentKey][0][compId]) {
-        this.ingridients[this.currentKey][0][compId].choosed = true;
-        this.cardData.components[this.currentKey] = [
-          this.ingridients[this.currentKey][0][compId].id,
-          this.ingridients[this.currentKey][0][compId].name,
-          this.ingridients[this.currentKey][0][compId].price
-        ];
-      }
-    } else {
-      for (let component of this.cardData['components'][this.currentKey]) {
-        const compId = component[0];
-        if (this.ingridients[this.currentKey][0][compId]) {
-          this.ingridients[this.currentKey][0][compId].choosed = true;
-          component[0] = this.ingridients[this.currentKey][0][compId].id;
-          component[1] = this.ingridients[this.currentKey][0][compId].name;
-          component[2] = this.ingridients[this.currentKey][0][compId].price;
-        }
-      }
-    }
-
-    this.cardCollections[this.currentKey] = [];
-    for (let element of this.ingridients[this.currentKey]) {
-      for (let product in element) {
-        let cardElement = new IngredientCard(element[product], this.settings[this.currentKey].multiple, this);
-        this.cardCollections[this.currentKey].push(cardElement);
-      }
-    }
-    return this.ingridients[this.currentKey];
-  }
   async initialize() {
-    await this.loadData();
+    await store.loadIngredients();
   }
 
   openBuilder() {
     document.body.classList.add('no-scroll');
     this.cardCollections = {};
-    this.currentKey = 'size';
 
     const modal = document.getElementById('modal');
     modal.classList.add('modal-visible');
 
     document.getElementById('previous-modal').onclick = () => {
-      this.renderBuilder(this.settings[this.getPrevKey()]);
+      this.getPrevKey();
+      this.renderBuilder();
     };
 
     document.getElementById('next-modal').onclick = () => {
-      this.renderBuilder(this.settings[this.getNextKey()]);
+      this.getNextKey();
+      this.renderBuilder();
     };
     document.addEventListener('keydown', this.escKeyHandler);
 
@@ -103,7 +43,10 @@ export class SandwichBuilder {
   }
 
   async renderBuilder() {
-    if (this.settings[this.currentKey].object != 'ready') {
+    const currentStep = store.getCurrentStep();
+    const sandwichConfig = store.getSandwichConfig();
+
+    if (this.settings[currentStep].object != 'ready') {
       document.getElementById('modal-menu-wrapper').innerHTML = '';
       const menu = document.createElement('div');
       menu.id = 'modal-menu';
@@ -112,21 +55,32 @@ export class SandwichBuilder {
       await this.initialize();
 
       const header = document.getElementById('header-text');
-      header.textContent = this.settings[this.currentKey].title;
+      header.textContent = this.settings[currentStep].title;
       const footer = document.getElementById('modal-footer');
-      footer.textContent = 'Итого: ' + this.cardData.price + ' руб.';
+      footer.textContent = 'Итого: ' + sandwichConfig.price + ' руб.';
 
       this.renderIngredientSwitcher();
 
-      for (let card of this.cardCollections[this.currentKey]) {
+      const ingredients = store.getIngredientsForStep(currentStep);
+      this.cardCollections[currentStep] = [];
+
+      for (let element of ingredients) {
+        for (let product in element) {
+          let cardElement = new IngredientCard(element[product], this.settings[currentStep].multiple, this);
+          this.cardCollections[currentStep].push(cardElement);
+        }
+      }
+
+      for (let card of this.cardCollections[currentStep]) {
         card.renderModalCard();
       }
     } else {
-      renderBuilderReady(this.settings, this.cardData);
+      renderBuilderReady(this.settings, sandwichConfig);
     }
   }
 
   renderIngredientSwitcher() {
+    const currentStep = store.getCurrentStep();
     const row = document.getElementsByClassName('ingredients');
     for (let element of row) {
       if (element.classList.contains('modal-switcher-active')) {
@@ -137,7 +91,7 @@ export class SandwichBuilder {
       }
     }
 
-    const currentElement = document.getElementById(this.currentKey);
+    const currentElement = document.getElementById(currentStep);
     currentElement.classList.add('modal-switcher-active');
     for (let element of row) {
       if (!element.classList.contains('modal-switcher-active')) {
@@ -148,34 +102,44 @@ export class SandwichBuilder {
 
   getNextKey() {
     const keys = Object.keys(this.settings);
-    const currentIndex = keys.indexOf(this.currentKey);
+    const currentIndex = keys.indexOf(store.getCurrentStep());
 
     if (currentIndex === -1) return null;
     if (currentIndex === keys.length - 1) return null;
-    this.currentKey = keys[currentIndex + 1];
-    return this.currentKey;
+    const nextKey = keys[currentIndex + 1];
+    store.setStep(nextKey);
+    return nextKey;
   }
 
   getPrevKey() {
     const keys = Object.keys(this.settings);
-    const currentIndex = keys.indexOf(this.currentKey);
+    const currentIndex = keys.indexOf(store.getCurrentStep());
 
     if (currentIndex === -1) return null;
     if (currentIndex === 0) return null;
-    this.currentKey = keys[currentIndex - 1];
-    return this.currentKey;
+    const prevKey = keys[currentIndex - 1];
+    store.setStep(prevKey);
+    return prevKey;
   }
+
   closeBuilder() {
     document.removeEventListener('keydown', this.escKeyHandler);
     document.body.classList.remove('no-scroll');
-    this.currentKey = 'size';
+    store.setStep('size');
 
     const modal = document.getElementById('modal');
     modal.classList.remove('modal-visible');
   }
+
   escKeyHandler = (event) => {
     if (event.key === 'Escape') {
       this.closeBuilder();
     }
   };
+
+  selectIngredient(ingredient) {
+    const currentStep = store.getCurrentStep();
+    store.selectIngredient(currentStep, ingredient);
+    this.renderBuilder();
+  }
 }

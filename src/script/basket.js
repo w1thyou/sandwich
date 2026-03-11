@@ -1,4 +1,4 @@
-import { secondaryColour } from '@constant';
+import { accentColour } from '@constant';
 
 export function addProduct(name, value, price) {
   const basket = document.getElementById('basket-content');

@@ -1,3 +1,5 @@
+import { store } from '@script/store.js';
+
 export class IngredientCard {
   constructor(data, multiple, builder) {
     this.builder = builder;
@@ -27,67 +29,47 @@ export class IngredientCard {
     card.appendChild(cardImg);
     card.appendChild(cardDescription);
     card.appendChild(cardPrice);
+
     const modalMenu = document.getElementById('modal-menu');
     modalMenu.appendChild(card);
-    if (this.data.choosed) {
+
+    const sandwichConfig = store.getSandwichConfig();
+    const currentStep = store.getCurrentStep();
+    const components = sandwichConfig?.components?.[currentStep];
+
+    let isChoosed = false;
+
+    if (components === undefined || components === null) {
+      isChoosed = false;
+    } else if (Array.isArray(components)) {
+      if (components.length === 0) {
+        isChoosed = false;
+      } else if (typeof components[0] === 'string') {
+        isChoosed = components[0] === this.data.id;
+      } else if (Array.isArray(components[0])) {
+        isChoosed = components.some((item) => item && item[0] === this.data.id);
+      }
+    }
+
+    if (isChoosed) {
       card.classList.add('modal-card-active');
     }
-    if (!this.data.choosed) {
+
+    if (!isChoosed) {
       card.addEventListener('click', () => {
-        if (this.multiple === false || !this.multiple) {
-          this.builder.cardData.price -= this.builder.cardData.components[this.builder.currentKey][2];
-
-          for (let cardElement of modalMenu.children) {
-            if (cardElement.classList.contains('modal-card-inactive')) {
-              cardElement.classList.remove('modal-card-inactive');
-            }
-            if (cardElement.classList.contains('modal-card-active')) {
-              cardElement.classList.remove('modal-card-active');
-            }
-          }
-          card.classList.add('modal-card-active');
-
-          for (let cardElement of modalMenu.children) {
-            if (!cardElement.classList.contains('modal-card-active')) {
-              cardElement.classList.add('modal-card-inactive');
-            }
-          }
-
-          this.builder.cardData.components[this.builder.currentKey] = [
-            this.data.id,
-            this.data.name,
-            this.data.price
-          ];
-          this.builder.cardData.price += this.data.price;
-          this.builder.renderBuilder();
-        } else {
-          if (typeof this.builder.cardData.components[this.builder.currentKey][0] === 'string') {
-            this.builder.cardData.components[this.builder.currentKey] = [
-              this.data.id,
-              this.data.name,
-              this.data.price
-            ];
-          } else {
-            this.builder.cardData.components[this.builder.currentKey].push([
-              this.data.id,
-              this.data.name,
-              this.data.price
-            ]);
-          }
-          this.builder.cardData.price += this.data.price;
-          this.builder.renderBuilder();
-        }
+        this.builder.selectIngredient(this.data);
       });
     } else {
       card.addEventListener('click', () => {
-        if (this.builder.currentKey === 'size' || this.builder.currentKey === 'bread') return;
+        if (currentStep === 'size' || currentStep === 'bread') return;
+
         card.classList.remove('modal-card-active');
         card.classList.add('modal-card-inactive');
-        this.builder.cardData.price -= this.data.price;
-        this.data.choosed = false;
-        this.builder.cardData.components[this.builder.currentKey] = this.builder.cardData.components[
-          this.builder.currentKey
-        ].filter((item) => item[0] != this.data.id);
+
+        const newComponents = (components || []).filter((item) => item && item[0] !== this.data.id);
+        sandwichConfig.components[currentStep] = newComponents;
+
+        store.recalculatePrice();
         this.builder.renderBuilder();
       });
     }

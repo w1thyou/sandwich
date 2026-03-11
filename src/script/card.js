@@ -1,4 +1,4 @@
-import { secondaryColour } from '@constant';
+import { accentColour } from '@constant';
 import { pubSub } from '@script/pubSub.js';
 import { counter } from '@script/counter.js';
 import { SandwichBuilder } from '@script/modal.js';
